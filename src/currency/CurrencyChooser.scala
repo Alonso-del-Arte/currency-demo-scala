@@ -1,6 +1,6 @@
 package currency
 
-import java.util.{ArrayList, Arrays, Currency, Random}
+import java.util.Currency
 import java.util.function.Predicate
 
 object CurrencyChooser {
@@ -12,7 +12,7 @@ object CurrencyChooser {
   def choosePseudoCurrency: Currency = Currency.getInstance("USD")
 
   // TODO: Write tests for this
-  def chooseCurrency: Currency = Currency.getInstance("XTS")
+  def chooseCurrency: Currency = Currency.getInstance("USD")
 
   // TODO: Write tests for this
   def chooseCurrency(fractionDigits: Int): Currency =
