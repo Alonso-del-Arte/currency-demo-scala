@@ -1,6 +1,6 @@
 package currency
 
-import java.util.{ArrayList, Arrays, Currency}
+import java.util.{Currency, NoSuchElementException}
 import java.util.function.Predicate
 
 import org.junit.jupiter.api.Assertions._
@@ -74,8 +74,21 @@ class CurrencyChooserTest {
     }
     val minimum = 3 * numberOfCalls / 5
     val actual = currencies.size
-    val msg = s"Expected at least ${minimum} distinct currencies, got ${actual}"
+    val msg = s"Expected at least $minimum distinct currencies, got $actual"
     assert(actual >= minimum, msg)
+  }
+
+  @Test def testNegativeCurrencyFractionDigitsCausesException(): Unit = {
+    val badFractionDigits = -Random.nextInt(Short.MaxValue) - 1
+    val message = s"$badFractionDigits fraction digits should cause exception"
+    val exc = assertThrows(classOf[NoSuchElementException],() => {
+      val badResult = CurrencyChooser.chooseCurrency(badFractionDigits)
+      println(s"$message, not given result ${badResult.getDisplayName}")
+    }, message)
+    val excMsg = exc.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    assert(!excMsg.isBlank, "Exception message should not be blank")
+    println("\"" +excMsg + "\"")
   }
 
 }
