@@ -75,7 +75,7 @@ object CurrencyChooser {
       throw new NoSuchElementException(excMsg)
     }
     var currency = Currency.getInstance("XTS")
-    while (currency.getDefaultFractionDigits != 0) {
+    while (currency.getDefaultFractionDigits != fractionDigits) {
       currency = chooseCurrency
     }
     currency
