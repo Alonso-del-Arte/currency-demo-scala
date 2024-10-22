@@ -68,7 +68,16 @@ object CurrencyChooser {
   def chooseCurrency(predicate: Currency => Boolean): Currency =
     Currency.getInstance("XTS")
 
-  // TODO: Write tests for this
+  /**
+   * Chooses a currency with a specified number of default fraction digits.
+   * @param fractionDigits The number of fraction digits. Should be at least 0,
+   *                       but preferably not more than 4.
+   * @return A currency with the specified number of fraction digits. Examples:
+   *         Japanese yen (JPY) for 0, United States dollars (USD) for 2, Lybian
+   *         dinars (LYD) for 3 and Chilean units of account (UF, CLF) for 4.
+   * @throws NoSuchElementException If `fractionDigits` is negative or greater
+   *                                than 4.
+   */
   def chooseCurrency(fractionDigits: Int): Currency = {
     if (fractionDigits < 0 || fractionDigits > 4) {
       val excMsg = s"$fractionDigits not valid"
