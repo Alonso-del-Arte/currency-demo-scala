@@ -65,12 +65,12 @@ object CurrencyChooser {
   }
 
   // TODO: Write tests for this
-  def chooseCurrency(fractionDigits: Int): Currency =
-    Currency.getInstance("JPY")
-
-  // TODO: Write tests for this
   def chooseCurrency(predicate: Currency => Boolean): Currency =
     Currency.getInstance("XTS")
+
+  // TODO: Write tests for this
+  def chooseCurrency(fractionDigits: Int): Currency =
+    Currency.getInstance("JPY")
 
   // TODO: Write tests for this
   def chooseCurrencyOtherThan(currency: Currency): Currency =
