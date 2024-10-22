@@ -107,6 +107,26 @@ class CurrencyChooserTest {
     val msg = s"Expected at least $minimum distinct currencies, got $actual"
     assert(actual >= minimum, msg)
   }
+  
+  @Test def testChooseCurrencyWithFractionDigitsTwoToFour(): Unit = {
+    for (expected <- 2 to 4) {
+      val selectedCurrencies =
+        CURRENCIES.filter(_.getDefaultFractionDigits == expected)
+      val numberOfCalls = selectedCurrencies.size
+      var givenCurrencies: Set[Currency] = Set()
+      for (_ <- 1 to numberOfCalls) {
+        val currency = CurrencyChooser.chooseCurrency(expected)
+        val message =
+          s"${currency.getDisplayName} should have $expected fraction digits"
+        assertEquals(expected, currency.getDefaultFractionDigits, message)
+        givenCurrencies += currency
+      }
+      val minimum = 3 * numberOfCalls / 5
+      val actual = givenCurrencies.size
+      val msg = s"Expected at least $minimum distinct currencies, got $actual"
+      assert(actual >= minimum, msg)
+    }
+  }
 
   @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
     val badFractionDigits = Random.nextInt(Short.MaxValue) + 5
