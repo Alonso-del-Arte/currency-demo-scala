@@ -91,4 +91,17 @@ class CurrencyChooserTest {
     println("\"" +excMsg + "\"")
   }
 
+  @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
+    val badFractionDigits = Random.nextInt(Short.MaxValue) + 5
+    val message = s"$badFractionDigits fraction digits should cause exception"
+    val exc = assertThrows(classOf[NoSuchElementException], () => {
+      val badResult = CurrencyChooser.chooseCurrency(badFractionDigits)
+      println(s"$message, not given result ${badResult.getDisplayName}")
+    }, message)
+    val excMsg = exc.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    assert(!excMsg.isBlank, "Exception message should not be blank")
+    println("\"" + excMsg + "\"")
+  }
+
 }
