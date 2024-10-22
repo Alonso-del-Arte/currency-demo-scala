@@ -74,7 +74,7 @@ object CurrencyChooser {
       val excMsg = s"$fractionDigits not valid"
       throw new NoSuchElementException(excMsg)
     }
-    Currency.getInstance("JPY")
+    Currency.getInstance("CLF")
   }
 
   // TODO: Write tests for this
