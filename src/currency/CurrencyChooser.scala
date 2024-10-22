@@ -53,7 +53,12 @@ object CurrencyChooser {
   // TODO: Write tests for this
   def choosePseudoCurrency: Currency = Currency.getInstance("USD")
 
-  // TODO: Write tests for this
+  /**
+   * Chooses a currency, preferably one suitable for an online currency
+   * conversion API. Historical currencies (including euro-replaced currencies)
+   * and pseudocurrencies, like gold (XAU), are excluded.
+   * @return A currency. For example, Icelandic kr&oacute;na (ISK).
+   */
   def chooseCurrency: Currency = {
     val index = Random.nextInt(TOTAL_NUMBER_OF_AVAILABLE_CURRENCIES)
     CURRENCIES_ARRAY(index)
