@@ -70,7 +70,7 @@ object CurrencyChooser {
 
   // TODO: Write tests for this
   def chooseCurrency(fractionDigits: Int): Currency = {
-    if (fractionDigits < 0) {
+    if (fractionDigits < 0 || fractionDigits > 4) {
       val excMsg = s"$fractionDigits not valid"
       throw new NoSuchElementException(excMsg)
     }
