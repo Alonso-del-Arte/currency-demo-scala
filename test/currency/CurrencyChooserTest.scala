@@ -43,11 +43,27 @@ object CurrencyChooserTest {
   private val AGGREGATE_EXCLUSIONS: Set[Currency] = HISTORICAL_CURRENCIES ++
     EURO_REPLACED_CURRENCIES ++ OTHER_EXCLUDED_CURRENCIES
 
-  private val CURRENCIES: Set[Currency] = ALL_JRE_RECOGNIZED_CURRENCIES -
-    AGGREGATE_EXCLUSIONS
+  // FIXME: Type mismatch commented out, found Set[Currency] but was Currency
+//  private val CURRENCIES: Set[Currency] = ALL_JRE_RECOGNIZED_CURRENCIES -
+//    AGGREGATE_EXCLUSIONS
 
 }
 
 class CurrencyChooserTest {
+
+  @Test def testChooseCurrency(): Unit = {
+    println("chooseCurrency")
+    val cur: Currency = CurrencyChooser.chooseCurrency
+    val msgPart =
+      s"${cur.getDisplayName} (${cur.getCurrencyCode}) shouldn't be "
+    assert(!(CurrencyChooserTest.PSEUDOCURRENCIES contains cur),
+      s"""$msgPart pseudocurrency""")
+    assert(!(CurrencyChooserTest.HISTORICAL_CURRENCIES contains cur),
+      s"""$msgPart historical""")
+    assert(!(CurrencyChooserTest.EURO_REPLACED_CURRENCIES contains cur),
+      s"""$msgPart euro-replaced""")
+    assert(!(CurrencyChooserTest.OTHER_EXCLUDED_CURRENCIES contains cur),
+      s"""$msgPart other exclusion""")
+  }
 
 }
