@@ -1,6 +1,6 @@
 package currency
 
-import java.util.Currency
+import java.util.{Currency, NoSuchElementException}
 import java.util.function.Predicate
 
 import scala.collection.JavaConverters._
@@ -69,8 +69,13 @@ object CurrencyChooser {
     Currency.getInstance("XTS")
 
   // TODO: Write tests for this
-  def chooseCurrency(fractionDigits: Int): Currency =
+  def chooseCurrency(fractionDigits: Int): Currency = {
+    if (fractionDigits < 0) {
+      val excMsg = s"$fractionDigits not valid"
+      throw new NoSuchElementException(excMsg)
+    }
     Currency.getInstance("JPY")
+  }
 
   // TODO: Write tests for this
   def chooseCurrencyOtherThan(currency: Currency): Currency =
