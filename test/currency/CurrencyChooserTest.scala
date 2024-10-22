@@ -66,4 +66,16 @@ class CurrencyChooserTest {
       s"""$msgPart other exclusion""")
   }
 
+  @Test def testChooseCurrencyGivesEnoughDistinctCurrencies(): Unit = {
+    val numberOfCalls = Random.nextInt(64) + 16
+    var currencies: Set[Currency] = Set()
+    for (_ <- 1 to numberOfCalls) {
+      currencies += CurrencyChooser.chooseCurrency
+    }
+    val minimum = 3 * numberOfCalls / 5
+    val actual = currencies.size
+    val msg = s"Expected at least ${minimum} distinct currencies, got ${actual}"
+    assert(actual >= minimum, msg)
+  }
+
 }
