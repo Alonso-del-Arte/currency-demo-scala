@@ -1,8 +1,9 @@
 package currency
 
+import currency.CurrencyChooserTest.CURRENCIES
+
 import java.util.{Currency, NoSuchElementException}
 import java.util.function.Predicate
-
 import org.junit.jupiter.api.Assertions._
 import org.junit.jupiter.api.Test
 
@@ -43,9 +44,8 @@ object CurrencyChooserTest {
   private val AGGREGATE_EXCLUSIONS: Set[Currency] = HISTORICAL_CURRENCIES ++
     EURO_REPLACED_CURRENCIES ++ OTHER_EXCLUDED_CURRENCIES
 
-  // FIXME: Type mismatch commented out, found Set[Currency] but was Currency
-//  private val CURRENCIES: Set[Currency] = ALL_JRE_RECOGNIZED_CURRENCIES -
-//    AGGREGATE_EXCLUSIONS
+  private val CURRENCIES: Set[Currency] = ALL_JRE_RECOGNIZED_CURRENCIES --
+    AGGREGATE_EXCLUSIONS
 
 }
 
@@ -68,12 +68,12 @@ class CurrencyChooserTest {
 
   @Test def testChooseCurrencyGivesEnoughDistinctCurrencies(): Unit = {
     val numberOfCalls = Random.nextInt(64) + 16
-    var currencies: Set[Currency] = Set()
+    var givenCurrencies: Set[Currency] = Set()
     for (_ <- 1 to numberOfCalls) {
-      currencies += CurrencyChooser.chooseCurrency
+      givenCurrencies += CurrencyChooser.chooseCurrency
     }
     val minimum = 3 * numberOfCalls / 5
-    val actual = currencies.size
+    val actual = givenCurrencies.size
     val msg = s"Expected at least $minimum distinct currencies, got $actual"
     assert(actual >= minimum, msg)
   }
@@ -89,6 +89,23 @@ class CurrencyChooserTest {
     assert(excMsg != null, "Exception message should not be null")
     assert(!excMsg.isBlank, "Exception message should not be blank")
     println("\"" +excMsg + "\"")
+  }
+
+  @Test def testChooseCurrencyNoFractionDigits(): Unit = {
+    val selectedCurrencies: Set[Currency] =
+      CURRENCIES.filter(_.getDefaultFractionDigits == 0)
+    val numberOfCalls = selectedCurrencies.size
+    var givenCurrencies: Set[Currency] = Set()
+    for (_ <- 1 to numberOfCalls) {
+      val currency = CurrencyChooser.chooseCurrency(0)
+      val message = s"${currency.getDisplayName} should have 0 fraction digits"
+      assertEquals(0, currency.getDefaultFractionDigits, message)
+      givenCurrencies += currency
+    }
+    val minimum = 3 * numberOfCalls / 5
+    val actual = givenCurrencies.size
+    val msg = s"Expected at least $minimum distinct currencies, got $actual"
+    assert(actual >= minimum, msg)
   }
 
   @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
