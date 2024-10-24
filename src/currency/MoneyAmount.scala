@@ -2,6 +2,6 @@ package currency
 
 import java.util.{Currency, Locale}
 
-class MoneyAmount {
+class MoneyAmount(val fullAmountInCents: Long, val currency: Currency) {
 
 }
