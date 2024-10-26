@@ -96,7 +96,12 @@ object CurrencyChooser {
   }
 
   // TODO: Write tests for this
-  def chooseCurrencyOtherThan(currency: Currency): Currency =
-    Currency.getInstance("XTS")
+  def chooseCurrencyOtherThan(currency: Currency): Currency = {
+    var other: Currency = currency
+    while (other.equals(currency)) {
+      other = chooseCurrency
+    }
+    other
+  }
 
 }
