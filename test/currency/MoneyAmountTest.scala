@@ -3,6 +3,7 @@ package currency
 import currency.MoneyAmountTest.DOLLARS
 
 import java.util.{Currency, Locale}
+
 import org.junit.jupiter.api.Assertions._
 import org.junit.jupiter.api.Test
 
@@ -97,10 +98,14 @@ class MoneyAmountTest {
     }
   }
 
-  def testUnitsNoSubunits_NOT_YET_(): Unit = {
+  @Test def testUnitsNoSubunits(): Unit = {
     val currency = CurrencyChooser.chooseCurrency(0)
-    val fullAmountInCents = Random.nextInt(Short.MaxValue) + Byte.MaxValue
-    val amount = new MoneyAmount(fullAmountInCents, currency)
+    val expected = Random.nextInt(Short.MaxValue) + Byte.MaxValue
+    val amount = new MoneyAmount(expected, currency)
+    val actual = amount.units
+    val message = s"Units for ${currency.getDisplayName} " +
+      s"(${currency.getCurrencyCode}) should be $expected"
+    assertEquals(expected, actual, message)
   }
 
 }
