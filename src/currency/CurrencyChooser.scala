@@ -65,8 +65,13 @@ object CurrencyChooser {
   }
 
   // TODO: Write tests for this
-  def chooseCurrency(predicate: Currency => Boolean): Currency =
-    Currency.getInstance("XTS")
+  def chooseCurrency(predicate: Currency => Boolean): Currency = {
+    var currency = Currency.getInstance("XTS")
+    while (!predicate(currency)) {
+      currency = chooseCurrency
+    }
+    currency
+  }
 
   /**
    * Chooses a currency with a specified number of default fraction digits.
