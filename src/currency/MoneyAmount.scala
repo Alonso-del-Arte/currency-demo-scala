@@ -14,7 +14,7 @@ class MoneyAmount(val fullAmountInCents: Long, val currency: Currency) {
   val subdivisions: Short = -1 // TODO: Write tests for this
 
   override def toString: String = {
-    val symbol = Currency.getInstance(Locale.US).getSymbol
+    val symbol = this.currency.getSymbol
     val numStr = this.fullAmountInCents.toString
     val len = numStr.length
     val dot = len - 2
