@@ -5,7 +5,16 @@ import java.util.{Currency, Locale}
 object MoneyAmount {
 
   // TODO: Write tests for this
-  private[currency] def unitsDivisor(currency: Currency): Int = 1
+  private[currency] def unitsDivisor(currency: Currency): Int = {
+    var divisor = 1
+    val stop = currency.getDefaultFractionDigits
+    var index = 0;
+    while (index < stop) {
+      divisor *= 10
+      index += 1
+    }
+    divisor
+  }
 
 }
 
