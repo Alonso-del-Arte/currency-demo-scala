@@ -52,15 +52,25 @@ class MoneyAmountTest {
   @Test def testToStringCurrencyWithMoreThan100Subunits(): Unit = {
     val currency = CurrencyChooser.chooseCurrency(cur =>
       cur.getDefaultFractionDigits > 2)
-    val fractDigits = currency.getDefaultFractionDigits
+    val fractionDigits = currency.getDefaultFractionDigits
     val fullAmountInCents = Random.nextInt(Short.MaxValue) + Byte.MaxValue
     val amount = new MoneyAmount(fullAmountInCents, currency)
     val symbol = currency.getSymbol
     val numStr = Integer.toString(fullAmountInCents)
     val len = numStr.length
-    val dot = len - fractDigits
+    val dot = len - fractionDigits
     val expected =
       s"$symbol${numStr.substring(0, dot)}.${numStr.substring(dot, len)}"
+    val actual = amount.toString
+    assertEquals(expected, actual)
+  }
+
+  @Test def testToStringNoSubunits(): Unit = {
+    val currency = CurrencyChooser.chooseCurrency(0)
+    val fullAmountInCents = Random.nextInt(Short.MaxValue) + Byte.MaxValue
+    val amount = new MoneyAmount(fullAmountInCents, currency)
+    val symbol = currency.getSymbol
+    val expected = s"$symbol$fullAmountInCents"
     val actual = amount.toString
     assertEquals(expected, actual)
   }
