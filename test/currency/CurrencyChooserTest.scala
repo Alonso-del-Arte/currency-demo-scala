@@ -4,6 +4,7 @@ import currency.CurrencyChooserTest.{CURRENCIES, examplePredicate}
 
 import java.util.{Currency, NoSuchElementException}
 import java.util.function.Predicate
+
 import org.junit.jupiter.api.Assertions._
 import org.junit.jupiter.api.Test
 
@@ -154,8 +155,12 @@ class CurrencyChooserTest {
   }
 
   @Test def testChooseCurrencyOtherThan(): Unit = {
-    //
-    fail("RESUME WORKING HERE")
+    val currencyArray = CurrencyChooserTest.CURRENCIES.toArray
+    val length = currencyArray.length
+    val currency = currencyArray(Random.nextInt(length))
+    val actual = CurrencyChooser.chooseCurrencyOtherThan(currency)
+    val message = s"Currency ${actual.getDisplayName} should not be the same as ${currency.getDisplayName}"
+    assert(!actual.equals(currency), message)
   }
 
 }

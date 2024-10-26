@@ -1,7 +1,6 @@
 package currency
 
 import java.util.{Currency, NoSuchElementException}
-import java.util.function.Predicate
 
 import scala.collection.JavaConverters._
 import scala.util.Random
@@ -64,7 +63,6 @@ object CurrencyChooser {
     CURRENCIES_ARRAY(index)
   }
 
-  // TODO: Write tests for this
   def chooseCurrency(predicate: Currency => Boolean): Currency = {
     var currency = Currency.getInstance("XTS")
     while (!predicate(currency)) {
@@ -96,7 +94,8 @@ object CurrencyChooser {
   }
 
   // TODO: Write tests for this
-  def chooseCurrencyOtherThan(currency: Currency): Currency =
-    Currency.getInstance("XTS")
+  def chooseCurrencyOtherThan(currency: Currency): Currency = {
+    chooseCurrency((cur) => !cur.equals(currency))
+  }
 
 }
