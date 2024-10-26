@@ -17,7 +17,7 @@ class MoneyAmount(val fullAmountInCents: Long, val currency: Currency) {
     val symbol = this.currency.getSymbol
     val numStr = this.fullAmountInCents.toString
     val len = numStr.length
-    val dot = len - 2
+    val dot = len - this.currency.getDefaultFractionDigits
     s"$symbol${numStr.substring(0, dot)}.${numStr.substring(dot, len)}"
   }
 
