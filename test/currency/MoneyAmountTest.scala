@@ -108,4 +108,23 @@ class MoneyAmountTest {
     assertEquals(expected, actual, message)
   }
 
+  @Test def testUnits(): Unit = {
+    println("units")
+    val currency = CurrencyChooser.chooseCurrency(cur =>
+      cur.getDefaultFractionDigits > 0)
+    val fractionDigits = currency.getDefaultFractionDigits
+    val fullAmountInCents = Random.nextInt(Short.MaxValue) + Byte.MaxValue
+    val amount = new MoneyAmount(fullAmountInCents, currency)
+    var index = 0
+    var unitsDiv = 1
+    while (index < fractionDigits) {
+      unitsDiv *= 10
+      index += 1
+    }
+    val expected = fullAmountInCents / unitsDiv
+    val actual = amount.units
+    val message = s"Units for ${amount.toString} should be $expected"
+    assertEquals(expected, actual, message)
+  }
+
 }
