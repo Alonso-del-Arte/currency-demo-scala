@@ -5,7 +5,7 @@ import java.util.{Currency, Locale}
 object MoneyAmount {
 
   // TODO: Write tests for this
-  private[currency] def unitsDivisor(currency: Currency): Int = -1
+  private[currency] def unitsDivisor(currency: Currency): Int = 1
 
 }
 
