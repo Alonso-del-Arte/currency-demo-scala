@@ -1,6 +1,6 @@
 package currency
 
-import currency.CurrencyChooserTest.CURRENCIES
+import currency.CurrencyChooserTest.{CURRENCIES, examplePredicate}
 
 import java.util.{Currency, NoSuchElementException}
 import java.util.function.Predicate
@@ -46,6 +46,10 @@ object CurrencyChooserTest {
 
   private val CURRENCIES: Set[Currency] = ALL_JRE_RECOGNIZED_CURRENCIES --
     AGGREGATE_EXCLUSIONS
+
+  private def examplePredicate(currency: Currency): Boolean = {
+    currency.getDefaultFractionDigits > -1 && currency.getNumericCode % 2 == 1
+  }
 
 }
 
@@ -107,7 +111,7 @@ class CurrencyChooserTest {
     val msg = s"Expected at least $minimum distinct currencies, got $actual"
     assert(actual >= minimum, msg)
   }
-  
+
   @Test def testChooseCurrencyWithFractionDigitsTwoToFour(): Unit = {
     for (expected <- 2 to 4) {
       val selectedCurrencies =
@@ -139,6 +143,19 @@ class CurrencyChooserTest {
     assert(excMsg != null, "Exception message should not be null")
     assert(!excMsg.isBlank, "Exception message should not be blank")
     println("\"" + excMsg + "\"")
+  }
+
+  @Test def testChooseCurrencyByPredicate(): Unit = {
+    val actual: Currency = CurrencyChooser.chooseCurrency(examplePredicate _)
+    val msg =
+      s"${actual.getDisplayName} (${actual.getNumericCode}) has odd code, " +
+        s"nonnegative fraction digits ${actual.getDefaultFractionDigits}"
+    assert(examplePredicate(actual), msg)
+  }
+
+  @Test def testChooseCurrencyOtherThan(): Unit = {
+    //
+    fail("RESUME WORKING HERE")
   }
 
 }
