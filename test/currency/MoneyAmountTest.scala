@@ -84,6 +84,19 @@ class MoneyAmountTest {
     assertEquals(expected, actual, message)
   }
 
+  @Test def testUnitsDivisor(): Unit = {
+    println("unitsDivisor")
+    var expected = 10
+    for (fractionDigits <- 2 to 4) {
+      expected *= 10
+      val currency = CurrencyChooser.chooseCurrency(fractionDigits)
+      val actual = MoneyAmount.unitsDivisor(currency)
+      val message = s"Expecting $expected fraction digits for " +
+        s"${currency.getDisplayName} (${currency.getCurrencyCode})"
+      assertEquals(expected, actual, message)
+    }
+  }
+
   def testUnitsNoSubunits_NOT_YET_(): Unit = {
     val currency = CurrencyChooser.chooseCurrency(0)
     val fullAmountInCents = Random.nextInt(Short.MaxValue) + Byte.MaxValue
