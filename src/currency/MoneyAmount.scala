@@ -19,7 +19,8 @@ object MoneyAmount {
 }
 
 class MoneyAmount(val fullAmountInCents: Long, val currency: Currency) {
-  val units: Long = this.fullAmountInCents // TODO: Write tests for this
+  val units: Long = this.fullAmountInCents /
+    MoneyAmount.unitsDivisor(this.currency)
   val subdivisions: Short = -1 // TODO: Write tests for this
 
   override def toString: String = {
