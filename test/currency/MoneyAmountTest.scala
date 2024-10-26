@@ -75,4 +75,19 @@ class MoneyAmountTest {
     assertEquals(expected, actual)
   }
 
+  @Test def testUnitsDivisorWhenNoSubunits(): Unit = {
+    val currency = CurrencyChooser.chooseCurrency(0)
+    val expected = 1
+    val actual = MoneyAmount.unitsDivisor(currency)
+    val message = s"Units divisor for ${currency.getDisplayName} " +
+      s"(${currency.getCurrencyCode}) should be $expected"
+    assertEquals(expected, actual, message)
+  }
+
+  def testUnitsNoSubunits_NOT_YET_(): Unit = {
+    val currency = CurrencyChooser.chooseCurrency(0)
+    val fullAmountInCents = Random.nextInt(Short.MaxValue) + Byte.MaxValue
+    val amount = new MoneyAmount(fullAmountInCents, currency)
+  }
+
 }
