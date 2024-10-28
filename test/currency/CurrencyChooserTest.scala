@@ -93,9 +93,15 @@ class CurrencyChooserTest {
     }
   }
 
-  def testChooseCurrencyDoesNotGiveOtherExcludedCurrencies(): Unit = {
-    fail("HAVEN'T WRITTEN TEST YET")
-    //
+  @Test def testChooseCurrencyDoesNotGiveOtherExcludedCurrencies(): Unit = {
+    val msgPart = " should not be a currency excluded for some other reason"
+    for (_ <- 1 to CurrencyChooserTest.NUMBER_OF_CALLS_FOR_EXCLUSION_SEARCH) {
+      val currency = CurrencyChooser.chooseCurrency
+      val msg =
+        s"${currency.getDisplayName} (${currency.getCurrencyCode}) $msgPart"
+      assert(!CurrencyChooserTest.OTHER_EXCLUDED_CURRENCIES.contains(currency),
+        msg)
+    }
   }
 
   @org.junit.jupiter.api.Disabled
