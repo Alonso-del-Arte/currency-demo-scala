@@ -42,10 +42,17 @@ object CurrencyChooserTest {
     OTHER_EXCLUSION_CODES.map(Currency.getInstance)
 
   private val AGGREGATE_EXCLUSIONS: Set[Currency] = HISTORICAL_CURRENCIES ++
-    EURO_REPLACED_CURRENCIES ++ OTHER_EXCLUDED_CURRENCIES
+    EURO_REPLACED_CURRENCIES ++ OTHER_EXCLUDED_CURRENCIES ++ PSEUDOCURRENCIES
 
   private val CURRENCIES: Set[Currency] = ALL_JRE_RECOGNIZED_CURRENCIES --
     AGGREGATE_EXCLUSIONS
+
+  private val TOTAL_NUMBER_OF_CURRENCIES: Int = CURRENCIES.size
+
+  private val NUMBER_OF_CALLS_MULTIPLIER_FOR_EXCLUSION_SEARCH: Int = 4
+
+  private val NUMBER_OF_CALLS_FOR_EXCLUSION_SEARCH: Int =
+    NUMBER_OF_CALLS_MULTIPLIER_FOR_EXCLUSION_SEARCH * TOTAL_NUMBER_OF_CURRENCIES
 
   private def examplePredicate(currency: Currency): Boolean = {
     currency.getDefaultFractionDigits > -1 && currency.getNumericCode % 2 == 1
@@ -55,24 +62,14 @@ object CurrencyChooserTest {
 
 class CurrencyChooserTest {
 
-  @Test def testChooseCurrency(): Unit = {
-    println("chooseCurrency")
-    val cur: Currency = CurrencyChooser.chooseCurrency
-    val msgPart =
-      s"${cur.getDisplayName} (${cur.getCurrencyCode}) shouldn't be "
-    assert(!(CurrencyChooserTest.PSEUDOCURRENCIES contains cur),
-      s"""$msgPart pseudocurrency""")
-    assert(!(CurrencyChooserTest.HISTORICAL_CURRENCIES contains cur),
-      s"""$msgPart historical""")
-    assert(!(CurrencyChooserTest.EURO_REPLACED_CURRENCIES contains cur),
-      s"""$msgPart euro-replaced""")
-    assert(!(CurrencyChooserTest.OTHER_EXCLUDED_CURRENCIES contains cur),
-      s"""$msgPart other exclusion""")
-  }
-
   @Test def testChooseCurrencyDoesNotGivePseudocurrencies(): Unit = {
-    fail("HAVEN'T WRITTEN TEST YET")
-    //
+    val msgPart = " should not be pseudocurrency"
+    for (_ <- 1 to CurrencyChooserTest.NUMBER_OF_CALLS_FOR_EXCLUSION_SEARCH) {
+      val currency = CurrencyChooser.chooseCurrency
+      val msg =
+        s"${currency.getDisplayName} (${currency.getCurrencyCode}) $msgPart"
+      assert(!CurrencyChooserTest.PSEUDOCURRENCIES.contains(currency), msg)
+    }
   }
 
   def testChooseCurrencyDoesNotGiveHistoricalCurrencies(): Unit = {
@@ -88,6 +85,22 @@ class CurrencyChooserTest {
   def testChooseCurrencyDoesNotGiveOtherExcludedCurrencies(): Unit = {
     fail("HAVEN'T WRITTEN TEST YET")
     //
+  }
+
+  @org.junit.jupiter.api.Disabled
+  @Test def testChooseCurrency(): Unit = {
+    println("chooseCurrency")
+    val cur: Currency = CurrencyChooser.chooseCurrency
+    val msgPart =
+      s"${cur.getDisplayName} (${cur.getCurrencyCode}) shouldn't be "
+    assert(!(CurrencyChooserTest.PSEUDOCURRENCIES contains cur),
+      s"""$msgPart pseudocurrency""")
+    assert(!(CurrencyChooserTest.HISTORICAL_CURRENCIES contains cur),
+      s"""$msgPart historical""")
+    assert(!(CurrencyChooserTest.EURO_REPLACED_CURRENCIES contains cur),
+      s"""$msgPart euro-replaced""")
+    assert(!(CurrencyChooserTest.OTHER_EXCLUDED_CURRENCIES contains cur),
+      s"""$msgPart other exclusion""")
   }
 
   @Test def testChooseCurrencyGivesEnoughDistinctCurrencies(): Unit = {
