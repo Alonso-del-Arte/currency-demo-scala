@@ -1,5 +1,4 @@
 package currency
 
-class CurrencyConversionNeededException extends RuntimeException {
-
-}
+@SerialVersionUID(4559181705386131456L)
+class CurrencyConversionNeededException extends RuntimeException
