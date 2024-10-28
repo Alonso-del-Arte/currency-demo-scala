@@ -72,9 +72,14 @@ class CurrencyChooserTest {
     }
   }
 
-  def testChooseCurrencyDoesNotGiveHistoricalCurrencies(): Unit = {
-    fail("HAVEN'T WRITTEN TEST YET")
-    //
+  @Test def testChooseCurrencyDoesNotGiveHistoricalCurrencies(): Unit = {
+    val msgPart = " should not be historical currency"
+    for (_ <- 1 to CurrencyChooserTest.NUMBER_OF_CALLS_FOR_EXCLUSION_SEARCH) {
+      val currency = CurrencyChooser.chooseCurrency
+      val msg =
+        s"${currency.getDisplayName} (${currency.getCurrencyCode}) $msgPart"
+      assert(!CurrencyChooserTest.HISTORICAL_CURRENCIES.contains(currency), msg)
+    }
   }
 
   def testChooseCurrencyDoesNotGiveEuroReplacedCurrencies(): Unit = {
