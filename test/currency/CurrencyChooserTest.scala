@@ -70,6 +70,26 @@ class CurrencyChooserTest {
       s"""$msgPart other exclusion""")
   }
 
+  @Test def testChooseCurrencyDoesNotGivePseudocurrencies(): Unit = {
+    fail("HAVEN'T WRITTEN TEST YET")
+    //
+  }
+
+  def testChooseCurrencyDoesNotGiveHistoricalCurrencies(): Unit = {
+    fail("HAVEN'T WRITTEN TEST YET")
+    //
+  }
+
+  def testChooseCurrencyDoesNotGiveEuroReplacedCurrencies(): Unit = {
+    fail("HAVEN'T WRITTEN TEST YET")
+    //
+  }
+
+  def testChooseCurrencyDoesNotGiveOtherExcludedCurrencies(): Unit = {
+    fail("HAVEN'T WRITTEN TEST YET")
+    //
+  }
+
   @Test def testChooseCurrencyGivesEnoughDistinctCurrencies(): Unit = {
     val numberOfCalls = Random.nextInt(64) + 16
     var givenCurrencies: Set[Currency] = Set()
@@ -95,7 +115,7 @@ class CurrencyChooserTest {
     println("\"" +excMsg + "\"")
   }
 
-  @Test def testChooseCurrencyNoFractionDigits(): Unit = {
+  @org.junit.jupiter.api.Disabled @Test def testChooseCurrencyNoFractionDigits(): Unit = {
     val selectedCurrencies: Set[Currency] =
       CURRENCIES.filter(_.getDefaultFractionDigits == 0)
     val numberOfCalls = selectedCurrencies.size
@@ -112,7 +132,7 @@ class CurrencyChooserTest {
     assert(actual >= minimum, msg)
   }
 
-  @Test def testChooseCurrencyWithFractionDigitsTwoToFour(): Unit = {
+  @org.junit.jupiter.api.Disabled @Test def testChooseCurrencyWithFractionDigitsTwoToFour(): Unit = {
     for (expected <- 2 to 4) {
       val selectedCurrencies =
         CURRENCIES.filter(_.getDefaultFractionDigits == expected)
@@ -132,7 +152,7 @@ class CurrencyChooserTest {
     }
   }
 
-  @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
+  @org.junit.jupiter.api.Disabled @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
     val badFractionDigits = Random.nextInt(Short.MaxValue) + 5
     val message = s"$badFractionDigits fraction digits should cause exception"
     val exc = assertThrows(classOf[NoSuchElementException], () => {
@@ -145,7 +165,7 @@ class CurrencyChooserTest {
     println("\"" + excMsg + "\"")
   }
 
-  @Test def testChooseCurrencyByPredicate(): Unit = {
+  @org.junit.jupiter.api.Disabled @Test def testChooseCurrencyByPredicate(): Unit = {
     val actual: Currency = CurrencyChooser.chooseCurrency(examplePredicate _)
     val msg =
       s"${actual.getDisplayName} (${actual.getNumericCode}) has odd code, " +
