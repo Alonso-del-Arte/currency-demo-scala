@@ -84,14 +84,14 @@ object CurrencyChooser {
    *                                than 4.
    */
   def chooseCurrency(fractionDigits: Int): Currency = {
-    if (fractionDigits < 0 || fractionDigits > 4) {
-      val excMsg = s"$fractionDigits not valid"
-      throw new NoSuchElementException(excMsg)
-    }
+//    if (fractionDigits < 0 || fractionDigits > 4) {
+//      val excMsg = s"$fractionDigits not valid"
+//      throw new NoSuchElementException(excMsg)
+//    }
     var currency = Currency.getInstance("XTS")
-    while (currency.getDefaultFractionDigits != fractionDigits) {
-      currency = chooseCurrency
-    }
+//    while (currency.getDefaultFractionDigits != fractionDigits) {
+//      currency = chooseCurrency
+//    }
     currency
   }
 
