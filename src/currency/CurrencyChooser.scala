@@ -51,7 +51,7 @@ object CurrencyChooser {
   def getSuitableCurrencies: Set[Currency] = Set(Currency.getInstance("XTS"))
 
   // TODO: Write tests for this
-  def choosePseudoCurrency: Currency = Currency.getInstance("USD")
+  def choosePseudocurrency: Currency = Currency.getInstance("USD")
 
   /**
    * Chooses a currency, preferably one suitable for an online currency
