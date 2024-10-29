@@ -64,7 +64,14 @@ object CurrencyChooser {
     CURRENCIES_ARRAY(index)
   }
 
-  // TODO: Write tests for this
+  /**
+   * Chooses a currency satisfying a given Boolean condition.
+   * @param predicate The Boolean condition. For example, the currency's symbol
+   *                  in the current locale is different from the currency's
+   *                  ISO-4217 letter code.
+   * @return A currency satisfying `predicate`. In the example, this might be
+   *         Japanese yen (JPY), with symbol &yen; in the United States locale.
+   */
   def chooseCurrency(predicate: Currency => Boolean): Currency = {
     var currency = Currency.getInstance("XTS")
     while (!predicate(currency)) {
