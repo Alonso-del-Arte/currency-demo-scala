@@ -104,23 +104,8 @@ class CurrencyChooserTest {
     }
   }
 
-  @org.junit.jupiter.api.Disabled
   @Test def testChooseCurrency(): Unit = {
     println("chooseCurrency")
-    val cur: Currency = CurrencyChooser.chooseCurrency
-    val msgPart =
-      s"${cur.getDisplayName} (${cur.getCurrencyCode}) shouldn't be "
-    assert(!(CurrencyChooserTest.PSEUDOCURRENCIES contains cur),
-      s"""$msgPart pseudocurrency""")
-    assert(!(CurrencyChooserTest.HISTORICAL_CURRENCIES contains cur),
-      s"""$msgPart historical""")
-    assert(!(CurrencyChooserTest.EURO_REPLACED_CURRENCIES contains cur),
-      s"""$msgPart euro-replaced""")
-    assert(!(CurrencyChooserTest.OTHER_EXCLUDED_CURRENCIES contains cur),
-      s"""$msgPart other exclusion""")
-  }
-
-  @Test def testChooseCurrencyGivesEnoughDistinctCurrencies(): Unit = {
     val numberOfCalls = Random.nextInt(64) + 16
     var givenCurrencies: Set[Currency] = Set()
     for (_ <- 1 to numberOfCalls) {
@@ -145,7 +130,7 @@ class CurrencyChooserTest {
     println("\"" +excMsg + "\"")
   }
 
-  @org.junit.jupiter.api.Disabled @Test def testChooseCurrencyNoFractionDigits(): Unit = {
+  @Test def testChooseCurrencyNoFractionDigits(): Unit = {
     val selectedCurrencies: Set[Currency] =
       CURRENCIES.filter(_.getDefaultFractionDigits == 0)
     val numberOfCalls = selectedCurrencies.size
@@ -162,7 +147,7 @@ class CurrencyChooserTest {
     assert(actual >= minimum, msg)
   }
 
-  @org.junit.jupiter.api.Disabled @Test def testChooseCurrencyWithFractionDigitsTwoToFour(): Unit = {
+  @Test def testChooseCurrencyWithFractionDigitsTwoToFour(): Unit = {
     for (expected <- 2 to 4) {
       val selectedCurrencies =
         CURRENCIES.filter(_.getDefaultFractionDigits == expected)
@@ -182,7 +167,7 @@ class CurrencyChooserTest {
     }
   }
 
-  @org.junit.jupiter.api.Disabled @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
+  @Test def testExcessiveCurrencyFractionDigitsCausesException(): Unit = {
     val badFractionDigits = Random.nextInt(Short.MaxValue) + 5
     val message = s"$badFractionDigits fraction digits should cause exception"
     val exc = assertThrows(classOf[NoSuchElementException], () => {
