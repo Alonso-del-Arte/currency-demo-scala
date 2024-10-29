@@ -181,11 +181,11 @@ class CurrencyChooserTest {
     println("\"" + excMsg + "\"")
   }
 
-  @org.junit.jupiter.api.Disabled @Test def testChooseCurrencyByPredicate(): Unit = {
+  @Test def testChooseCurrencyByPredicate(): Unit = {
     val actual: Currency = CurrencyChooser.chooseCurrency(examplePredicate _)
     val msg =
-      s"${actual.getDisplayName} (${actual.getNumericCode}) has odd code, " +
-        s"nonnegative fraction digits ${actual.getDefaultFractionDigits}"
+      s"${actual.getDisplayName} (${actual.getNumericCode}) should have odd " +
+        s"code, nonnegative fraction digits ${actual.getDefaultFractionDigits}"
     assert(examplePredicate(actual), msg)
   }
 
