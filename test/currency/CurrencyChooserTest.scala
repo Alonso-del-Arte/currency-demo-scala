@@ -1,9 +1,8 @@
 package currency
 
-import currency.CurrencyChooserTest.{CURRENCIES, examplePredicate}
+import currency.CurrencyChooserTest.{AGGREGATE_EXCLUSIONS, CURRENCIES, examplePredicate}
 
 import java.util.{Currency, NoSuchElementException}
-
 import org.junit.jupiter.api.Assertions._
 import org.junit.jupiter.api.Test
 
@@ -197,6 +196,10 @@ class CurrencyChooserTest {
     val message = s"${actual.getDisplayName} (${actual.getCurrencyCode})" +
       " should not be the same as " +
       s"${currency.getDisplayName} (${currency.getCurrencyCode})"
-    assert(!actual.equals(currency), message)  }
+    assert(!actual.equals(currency), message)
+    assert(!CurrencyChooserTest.AGGREGATE_EXCLUSIONS.contains(actual),
+      s"${actual.getDisplayName} (${actual.getCurrencyCode})" +
+        " should not be on list of exclusions")
+  }
 
 }
