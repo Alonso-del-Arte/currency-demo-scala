@@ -67,9 +67,9 @@ object CurrencyChooser {
   // TODO: Write tests for this
   def chooseCurrency(predicate: Currency => Boolean): Currency = {
     var currency = Currency.getInstance("XTS")
-    while (!predicate(currency)) {
-      currency = chooseCurrency
-    }
+//    while (!predicate(currency)) {
+//      currency = chooseCurrency
+//    }
     currency
   }
 
