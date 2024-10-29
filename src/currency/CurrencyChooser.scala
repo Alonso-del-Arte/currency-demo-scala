@@ -95,7 +95,19 @@ object CurrencyChooser {
     currency
   }
 
-  // TODO: Write tests for this
-  def chooseCurrencyOtherThan(currency: Currency): Currency = currency
+  /**
+   * Selects a currency other than a specified currency.
+   * @param currency The currency that is not to be chosen. For example, United
+   *                 States dollars (USD).
+   * @return A currency other than `currency`. For example, Kazakhstani tenge
+   *         (KZT).
+   */
+  def chooseCurrencyOtherThan(currency: Currency): Currency = {
+    var other = currency
+    while (currency.equals(other)) {
+      other = chooseCurrency
+    }
+    other
+  }
 
 }
