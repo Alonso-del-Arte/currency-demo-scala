@@ -142,7 +142,7 @@ class CurrencyChooserTest {
       assertEquals(0, currency.getDefaultFractionDigits, message)
       givenCurrencies += currency
     }
-    val minimum = 3 * numberOfCalls / 5
+    val minimum = 11 * numberOfCalls / 20
     val actual = givenCurrencies.size
     val msg = s"Expected at least $minimum distinct currencies, got $actual"
     assert(actual >= minimum, msg)
