@@ -95,11 +95,7 @@ object CurrencyChooser {
       val excMsg = s"$fractionDigits not valid"
       throw new NoSuchElementException(excMsg)
     }
-    var currency = Currency.getInstance("XTS")
-    while (currency.getDefaultFractionDigits != fractionDigits) {
-      currency = chooseCurrency
-    }
-    currency
+    chooseCurrency(cur => cur.getDefaultFractionDigits == fractionDigits)
   }
 
   /**
